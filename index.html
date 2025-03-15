@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ویرایشگر گراف پیشرفته</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .edge-highlight {
+            stroke: #e67e22 !important;
+            stroke-width: 3 !important;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>ویرایشگر گراف با قابلیت UCS</h1>
+    <div class="main-content">
+        <div class="graph-editor">
+            <canvas id="graphCanvas" width="800" height="600"></canvas>
+            <div class="controls">
+                <button id="addNode">➕ افزودن گره</button>
+                <button id="addEdge">🔗 افزودن یال</button>
+                <button id="moveNode">↔️ جابجایی</button>
+                <button id="runUCS">▶️ اجرای UCS</button>
+                <button id="nextStep">⏭️ گام بعدی</button>
+<!--                <button id="deleteNode">❌ حذف گره</button>-->
+                <button id="undoButton" title="Ctrl+Z">↩️ برگشت</button>
+                <div class="input-group">
+                    <input type="text" id="startNode" placeholder="شروع (A, B, ...)">
+                    <button id="selectStart">📍 انتخاب شروع</button>
+                    <input type="text" id="endNode" placeholder="پایان (A, B, ...)">
+                    <button id="selectEnd">🎯 انتخاب پایان</button>
+                    <div id="selectionMessage" style="display: none; color: #e67e22; font-weight: bold; padding: 5px;">
+                        در حال انتخاب گره...
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="results">
+            <h2>📊 نتایج اجرا</h2>
+            <table id="resultsTable">
+                <thead>
+                <tr>
+                    <th>شروع</th>
+                    <th>پایان</th>
+                    <th>هزینه</th>
+                    <th>مسیر</th>
+                </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+
+            <h3>📋 جدول یال‌ها</h3>
+            <table id="edgesTable">
+                <thead>
+                <tr>
+                    <th>مبدأ</th>
+                    <th>مقصد</th>
+                    <th>هزینه</th>
+                    <th>عملیات</th>
+                </tr>
+                </thead>
+                <tbody id="edgesTableBody"></tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<script src="script.js"></script>
+</body>
+</html>

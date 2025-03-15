@@ -1,0 +1,332 @@
+/* استایل‌های عمومی */
+/* تعریف فونت میخک */
+@font-face {
+    font-family: 'Mikhak';
+    src: url('./fonts/Mikhak-FD[DSTY,KSHD,wght].woff2') format('woff2');
+    /*url('./fonts/Mikhak.woff') format('woff');*/
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+body {
+    font-family: 'Mikhak', Tahoma, sans-serif;
+    direction: rtl;
+    text-align: right;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+    overflow: hidden; /* جلوگیری از اسکرول صفحه */
+}
+
+.container {
+    width: 100%;
+    height: 100vh; /* ارتفاع کامل صفحه */
+    padding: 20px;
+    padding-top: 0;
+    box-sizing: border-box;
+}
+
+h1 {
+    color: #333;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* چیدمان اصلی */
+.main-content {
+    display: flex;
+    flex-direction: row; /* تغییر جهت به افقی */
+    justify-content: space-between; /* فاصله بین بخش‌ها */
+    align-items: flex-start; /* تراز بالا */
+    height: calc(100vh - 100px); /* ارتفاع باقیمانده صفحه */
+}
+
+/* بخش ویرایشگر گراف */
+.graph-editor {
+    flex: 2; /* فضای بیشتر برای ویرایشگر گراف */
+    margin-right: 20px; /* فاصله بین ویرایشگر و جدول */
+}
+
+canvas {
+    border: 1px solid #000;
+    background-color: #fff;
+    margin-top: 20px;
+}
+
+.controls {
+    margin-top: 20px;
+}
+
+button {
+    padding: 10px 20px;
+    margin: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    background-color: #3498db;
+    color: white;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #2980b9;
+}
+
+input {
+    padding: 10px;
+    font-size: 16px;
+    width: 100px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+/* بخش نتایج */
+.results {
+    flex: 1; /* فضای کمتر برای جدول نتایج */
+    max-height: calc(100vh - 100px); /* ارتفاع باقیمانده صفحه */
+    /*overflow-y: auto; !* اسکرول داخلی برای جدول *!*/
+    background-color: #fff;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+button.active {
+    background-color: #2ecc71; /* رنگ سبز برای حالت فعال */
+    color: white;
+    border: 2px solid #27ae60; /* حاشیه سبز */
+}
+
+#resultsTable {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+    overflow: hidden;
+}
+
+#resultsTable th, #resultsTable td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+}
+
+#resultsTable th {
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+#resultsTable tbody tr:hover {
+    background-color: #f9f9f9;
+}
+
+.controls {
+    margin-top: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px; /* فاصله بین عناصر */
+}
+
+.input-group {
+    display: flex;
+    gap: 10px; /* فاصله بین کادرهای شروع و پایان */
+}
+
+button:disabled {
+    background-color: #bdc3c7; /* رنگ خاکستری برای دکمه‌های غیرفعال */
+    cursor: not-allowed; /* تغییر نشانگر ماوس */
+    opacity: 0.7; /* کاهش شفافیت */
+}
+
+.input-group input {
+    width: 100px; /* عرض کوچک‌تر برای کادرها */
+    padding: 8px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+/* در styles.css */
+#undoButton {
+    background-color: #f39c12; /* رنگ نارنجی */
+}
+
+#undoButton:disabled {
+    background-color: #f1c40f; /* رنگ زرد برای حالت غیرفعال */
+}
+
+#edgesTable {
+    width: 100%;
+    margin-top: 15px;
+    border-collapse: collapse;
+    max-height: 500px; /* ارتفاع دلخواه */
+    overflow-y: auto; /* فعال کردن اسکرول عمودی */
+    display: block;
+}
+
+#edgesTable thead {
+    position: sticky;
+    top: 0;
+    background: white;
+    z-index: 1;
+}
+
+#edgesTable th, #edgesTable td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+    position: relative;
+    user-select: none;
+}
+
+#edgesTable th:hover {
+    background-color: #f8f9fa;
+}
+
+#edgesTable input {
+    width: 60px;
+    padding: 4px;
+    text-align: center;
+}
+
+#edgesTable button {
+    padding: 4px 8px;
+    font-size: 12px;
+    background-color: #e74c3c;
+}
+
+/* استایل‌های پایه */
+body {
+    direction: rtl;
+    background: #f0f2f5;
+    margin: 0;
+    padding: 20px;
+    overflow: hidden;
+}
+
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+/* استایل کانواس */
+canvas {
+    border: 2px solid #2c3e50;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    background: white;
+}
+
+/* کنترل‌ها */
+.controls {
+    margin-top: 15px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 10px;
+}
+
+button {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    background: #3498db;
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+button:hover {
+    background: #2980b9;
+    transform: translateY(-2px);
+}
+
+button.active {
+    background: #2ecc71;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* جداول */
+.results {
+    background: white;
+    border-radius: 10px;
+    padding: 15px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+}
+
+th, td {
+    padding: 12px;
+    border: 1px solid #ddd;
+    text-align: center;
+}
+
+th {
+    background: #f8f9fa;
+}
+
+tr:hover {
+    background: #f1f5f9;
+    cursor: pointer;
+}
+
+/* هایلایت یال */
+.edge-highlight {
+    stroke: #e67e22 !important;
+    stroke-width: 3 !important;
+}
+
+#moveNode {
+    background-color: #9b59b6;
+}
+
+#moveNode.active {
+    background-color: #8e44ad;
+    box-shadow: 0 0 8px rgba(142, 68, 173, 0.4);
+}
+
+#edgesTable tr:hover {
+    background-color: #f8f9fa;
+    transition: background-color 0.2s ease;
+}
+
+#edgesTable tr:hover td {
+    background: #f8f9fa !important;
+    transition: all 0.3s ease;
+}
+
+.edge-highlight {
+    animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+    0% { opacity: 0.8; }
+    50% { opacity: 1; }
+    100% { opacity: 0.8; }
+}
+
+#selectStart {
+    background-color: #2ecc71; /* سبز */
+}
+
+#selectEnd {
+    background-color: #e74c3c; /* قرمز */
+}
+
+#selectStart.active, #selectEnd.active {
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.3);
+    transform: scale(1.05);
+}
+
+.input-group {
+    gap: 5px; /* فاصله بین دکمه‌ها */
+}
