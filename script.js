@@ -23,14 +23,18 @@ let history = [];
 let currentStep = -1;
 let isSelectingStart = false;
 let isSelectingEnd = false;
-let sortStates = [0, 0];
-let isDeletingNode = false;
 
 // ================== Undo System ==================
 function saveState() {
     history = history.slice(0, currentStep + 1);
     const state = {
-        nodes: nodes.map(node => ({ ...node })),
+        nodes: nodes.map(node => ({
+            x: node.x,
+            y: node.y,
+            label: node.label,
+            color: node.color,
+            isEdgeHighlighted: node.isEdgeHighlighted
+        })),
         edges: edges.map(edge => ({
             node1Label: edge.node1.label,
             node2Label: edge.node2.label,
@@ -50,7 +54,8 @@ function undo() {
 
     nodes = prevState.nodes.map(node => {
         const newNode = new Node(node.x, node.y, node.label);
-        Object.assign(newNode, node);
+        newNode.color = node.color;
+        newNode.isEdgeHighlighted = node.isEdgeHighlighted;
         return newNode;
     });
 
@@ -225,38 +230,6 @@ function unhighlightEdge(edge) {
     edge.node1.isEdgeHighlighted = false;
     edge.node2.isEdgeHighlighted = false;
     drawGraph();
-}
-
-// ================== Sorting Functionality ==================
-function sortEdges(columnIndex) {
-    sortStates[columnIndex] = (sortStates[columnIndex] + 1) % 3;
-
-    edges.sort((a, b) => {
-        const labelA = columnIndex === 0 ? a.node1.label : a.node2.label;
-        const labelB = columnIndex === 0 ? b.node1.label : b.node2.label;
-
-        if (sortStates[columnIndex] === 1) {
-            return labelA.localeCompare(labelB);
-        } else if (sortStates[columnIndex] === 2) {
-            return labelB.localeCompare(labelA);
-        }
-        return 0;
-    });
-
-    updateEdgeTable();
-    addSortIndicator(columnIndex);
-}
-
-function addSortIndicator(columnIndex) {
-    const headers = document.querySelectorAll('#edgesTable thead th');
-    headers.forEach((header, index) => {
-        header.textContent = header.textContent.replace(/ [↑↓]$/, '');
-        if (index === columnIndex) {
-            const indicator = sortStates[columnIndex] === 1 ? ' ↑' :
-                sortStates[columnIndex] === 2 ? ' ↓' : '';
-            header.textContent += indicator;
-        }
-    });
 }
 
 // ================== Core Functions ==================
@@ -530,13 +503,6 @@ function enableSelectionMode(type) {
 }
 
 // ================== Event Listeners ==================
-document.querySelectorAll('#edgesTable thead th').forEach((th, index) => {
-    if (index < 2) {
-        th.style.cursor = 'pointer';
-        th.addEventListener('click', () => sortEdges(index));
-    }
-});
-
 addNodeButton.addEventListener('click', () => {
     addNodeButton.classList.add('active');
     addEdgeButton.classList.remove('active');
